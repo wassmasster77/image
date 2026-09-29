@@ -1,0 +1,6 @@
+{
+  "name": "AI Photo Enhancer - Flutter Code & Live Studio",
+  "description": "كود برمجي متكامل ونظيف لملف main.dart و pubspec.yaml لتطبيق Flutter AI Photo Enhancer مع محاكي موبايل تفاعلي وواجهة داكنة عصرية.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
