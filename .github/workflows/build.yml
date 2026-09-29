@@ -1,4 +1,4 @@
-name: Build Flutter APK
+name: Build Android APK from Web
 
 on: [push]
 
@@ -7,13 +7,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          flutter-version: '3.x'
-          channel: 'stable'
-      - run: flutter pub get
-      - run: flutter build apk --release
-      - uses: actions/upload-artifact@v4
+          node-version: 18
+
+      - name: Install dependencies and build web app
+        run: |
+          npm install
+          npm run build
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
         with:
-          name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install Capacitor and Android platform
+        run: |
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npx cap init ImageApp com.wassmasster77.image --web-dir dist --yes
+          npx cap add android
+          npx cap sync android
+
+      - name: Build Android APK
+        run: |
+          cd android
+          ./gradlew assembleDebug
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
