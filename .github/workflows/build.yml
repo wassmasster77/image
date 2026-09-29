@@ -15,7 +15,7 @@ jobs:
 
       - name: Install dependencies and build web app
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run build
 
       - name: Setup Java JDK
@@ -26,7 +26,7 @@ jobs:
 
       - name: Install Capacitor and Android platform
         run: |
-          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npm install @capacitor/core @capacitor/cli @capacitor/android --legacy-peer-deps
           npx cap init ImageApp com.wassmasster77.image --web-dir dist --yes
           npx cap add android
           npx cap sync android
